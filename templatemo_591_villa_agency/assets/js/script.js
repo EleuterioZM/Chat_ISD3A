@@ -4,7 +4,7 @@ const buttonMessage = document.querySelector("#send-message");
 const selectModel = document.querySelector("#models");
 const formMessage = document.querySelector("form");
 
-const accessToken = 'REGRM2PC3DFZAYD6ELHU4BOWBORAU2RX';
+
 
 formMessage.addEventListener("submit", (e) => e.preventDefault());
 buttonMessage.addEventListener("click", insertMessageInHTML);
@@ -36,7 +36,7 @@ async function insertMessageInHTML() {
   formMessage.reset();
   resetButtonState();
 
-  const resposta = await enviarMensagemWitAI(userInputMessage);
+ 
 
   sectionMessages.innerHTML += `
     <div class="image-name">
@@ -52,31 +52,5 @@ function resetButtonState() {
   buttonMessage.classList.add("color-gray");
   buttonMessage.disabled = true;
 }
-
-async function enviarMensagemWitAI(input) {
-    try {
-      const response = await fetch(`https://api.wit.ai/message?v=20210501&q=${encodeURIComponent(input)}`, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
-      });
   
-      if (!response.ok) {
-        throw new Error('Erro ao acessar a API do Wit.ai');
-      }
-  
-      const data = await response.json();
-  
-      console.log('Resposta da API do Wit.ai:', data); // Adiciona este console.log
-  
-      if (!data.text) {
-        throw new Error('Resposta da API do Wit.ai está vazia');
-      }
-  
-      return data.text;
-    } catch (error) {
-      console.error('Erro ao enviar mensagem para a API do Wit.ai:', error.message);
-      return 'Desculpe, ocorreu um erro ao processar sua solicitação';
-    }
-  }
 
